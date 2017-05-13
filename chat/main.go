@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"sync"
 	"text/template"
+	"os"
+	"github.com/goblueprints/trace"
 )
 
 // templ represents a single template
