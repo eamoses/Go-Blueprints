@@ -32,7 +32,7 @@ func main() {
 	r.tracer = trace.New(os.Stdout)
 
 	http.Handle("/", &templateHandler{filename: "chat.html"})
-	http.Hangle("/room", r)
+	http.Handle("/room", r)
 
 	go r.run()
 
