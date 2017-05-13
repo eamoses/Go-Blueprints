@@ -11,7 +11,7 @@ type room struct {
 	// forward is a channel that holds incoming messages that should be forwarded to other clients
 	// join is a channel for clients whishing to join the room
 	// leave is a channel for clients wishing to leave the room
-	// clients holds all current clinest in this room
+	// clients holds all current clients in this room
 	forward chan []byte
 	join chan *client
 	leave chan *client
@@ -65,4 +65,13 @@ func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request)  {
 	defer func() { r.leave <- client } ()
 	go client.write()
 	client.read()
+}
+
+func newRoom() *room {
+	return &room{
+		forward: make(chan []byte),
+		join: make(chan *client),
+		leave make(chan *client),
+		clients: make(map[*client]bool),
+	}
 }
