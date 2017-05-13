@@ -28,7 +28,13 @@ func main() {
 	var addr = flag.String("addr", ":8080", "The addr of the application.")
 	flag.Parse() // parse the flags
 
+	r := newRoom()
+	r.tracer = trace.New(os.Stdout)
+
 	http.Handle("/", &templateHandler{filename: "chat.html"})
+	http.Hangle("/room", r)
+
+	go r.run()
 
 	// start the web server
 	log.Println("Starting web server on", *addr)
