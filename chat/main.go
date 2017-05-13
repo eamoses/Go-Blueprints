@@ -29,7 +29,6 @@ func main() {
 	flag.Parse() // parse the flags
 
 	r := newRoom()
-	r.tracer = trace.New(os.Stdout)
 
 	http.Handle("/", &templateHandler{filename: "chat.html"})
 	http.Handle("/room", r)
