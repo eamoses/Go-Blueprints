@@ -9,7 +9,7 @@ type authHandler struct {
 func (h *authHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if _, err := r.Cookie("auth"); err == http.ErrNoCookie {
 		//NOT authenticated
-		w.Header().set("Location", "/login")
+		w.Header().Set("Location", "/login")
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	} else if err != nil {
 		//ERROR
