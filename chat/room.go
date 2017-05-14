@@ -4,8 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/stretchr/objx"
-
 	"github.com/gorilla/websocket"
 	"github.com/matryer/goblueprints/chapter1/trace"
 )
@@ -79,7 +77,6 @@ func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	authCookie, err := req.Cookie("auth")
 	if err != nil {
 		log.Fatal("Failed to get auth cookie:", err)
 		return
@@ -88,7 +85,6 @@ func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		socket:   socket,
 		send:     make(chan *message, messageBufferSize),
 		room:     r,
-		userData: objx.MustFromBase64(authCookie.Value),
 	}
 	r.join <- client
 	defer func() { r.leave <- client }()
