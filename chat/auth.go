@@ -1,24 +1,32 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+	"fmt"
+	"strings"
+	"log"
+)
 
 type authHandler struct {
 	next http.Handler
 }
 
 func (h *authHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if _, err := r.Cookie("auth"); err == http.ErrNoCookie {
-		//NOT authenticated
+	_, err := r.Cookie("auth")
+	if err == http.ErrNoCookie {
+		// not authenticated
 		w.Header().Set("Location", "/login")
 		w.WriteHeader(http.StatusTemporaryRedirect)
-	} else if err != nil {
-		//ERROR
-		panic(err.Error())
-	} else {
-		//SUCCESS
-		h.next.ServeHTTP(w, r)
+		return
 	}
- }
+	if err != nil {
+		// some other error
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	// success - call the next handler
+	h.next.ServeHTTP(w, r)
+}
 
  func MustAuth(handler http.Handler) http.Handler {
 	 return &authHandler{next: handler}
