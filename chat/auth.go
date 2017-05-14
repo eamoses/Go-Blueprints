@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 	"log"
+	"github.com/markbates/goth"
 )
 
 type authHandler struct {

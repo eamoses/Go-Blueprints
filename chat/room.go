@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
-
+	"github.com/markbates/goth"
 	"github.com/gorilla/websocket"
 	"github.com/matryer/goblueprints/chapter1/trace"
 )

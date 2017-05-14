@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"sync"
 	"text/template"
-
+	"github.com/markbates/goth"
 	"github.com/matryer/goblueprints/chapter1/trace"
 )
 
